@@ -56,7 +56,7 @@ const Login = ({navigation}: navProps) => {
 
       if (data) {
         setLoading(false);
-        navigation.navigate('Home', {id: data._id});
+        navigation.navigate('Home');
       }
     } catch (error) {
       setLoading(false);
@@ -74,7 +74,8 @@ const Login = ({navigation}: navProps) => {
       <Text style={styles.headingText}>Welcome Back</Text>
       <TextInput
         style={styles.input}
-        placeholder="enter Email"
+        placeholderTextColor={'#737373'}
+        placeholder="Enter Email"
         value={email}
         onChangeText={text => setEmail(text)}
         keyboardType="email-address"
@@ -85,7 +86,8 @@ const Login = ({navigation}: navProps) => {
 
       <TextInput
         style={styles.input}
-        placeholder="enter Password"
+        placeholderTextColor={'#737373'}
+        placeholder="Enter Password"
         value={password}
         onChangeText={text => setPassword(text)}
       />
@@ -141,6 +143,7 @@ const styles = StyleSheet.create({
   input: {
     width: '90%',
     height: 50,
+    color: 'black',
     borderWidth: 1,
     borderColor: '#9e9e9e',
     marginTop: 20,

@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -5,7 +6,6 @@ import {
   View,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Loader from '../Components/Loader';
 
@@ -13,12 +13,12 @@ const AddNotes = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const [title, setTitle] = useState<string>(
-    route.params.type == 'EDIT' ? route.params.data.title : '',
+    route.params.type === 'EDIT' ? route.params.data.title : '',
   );
-  const [description, setdescription] = useState<string>(
-    route.params.type == 'EDIT' ? route.params.data.description : '',
+  const [description, setDescription] = useState<string>(
+    route.params.type === 'EDIT' ? route.params.data.description : '',
   );
-  const [isInvalidTitle, setisInvalidTitle] = useState<boolean>(false);
+  const [isInvalidTitle, setInvalidTitle] = useState<boolean>(false);
   const [isInvalidDesc, setIsInvalidDesc] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
@@ -26,19 +26,17 @@ const AddNotes = () => {
     let valid = true;
 
     if (title.length < 1) {
-      setisInvalidTitle(true);
+      setInvalidTitle(true);
       valid = false;
-    } else if (title.length > 0) {
-      setisInvalidTitle(false);
-      valid = true;
+    } else {
+      setInvalidTitle(false);
     }
 
     if (description.length < 1) {
       setIsInvalidDesc(true);
       valid = false;
-    } else if (description.length > 0) {
+    } else {
       setIsInvalidDesc(false);
-      valid = true;
     }
 
     return valid;
@@ -60,7 +58,7 @@ const AddNotes = () => {
         },
       );
       setTitle('');
-      setdescription('');
+      setDescription('');
       setLoading(false);
       navigation.goBack();
     } catch (error) {
@@ -86,7 +84,7 @@ const AddNotes = () => {
       );
       setLoading(false);
       setTitle('');
-      setdescription('');
+      setDescription('');
       navigation.goBack();
     } catch (error) {
       setLoading(false);
@@ -98,23 +96,21 @@ const AddNotes = () => {
     <View style={styles.container}>
       <TextInput
         placeholder="Enter Title"
-        placeholderTextColor={'#a1a1aa'}
         style={styles.input}
         value={title}
         onChangeText={text => setTitle(text)}
       />
       {isInvalidTitle && (
-        <Text style={styles.invalidText}> please enter valid title</Text>
+        <Text style={styles.invalidText}>Please enter a valid title</Text>
       )}
       <TextInput
         placeholder="Enter Description"
-        placeholderTextColor={'#a1a1aa'}
         style={styles.input}
         value={description}
-        onChangeText={text => setdescription(text)}
+        onChangeText={text => setDescription(text)}
       />
       {isInvalidDesc && (
-        <Text style={styles.invalidText}> please enter valid Desription </Text>
+        <Text style={styles.invalidText}>Please enter a valid description</Text>
       )}
 
       {route.params.type === 'EDIT' ? (
@@ -125,7 +121,7 @@ const AddNotes = () => {
               updateNote();
             }
           }}>
-          <Text style={styles.btnText}>Update Habit</Text>
+          <Text style={styles.btnText}>Update Note</Text>
           <Loader visible={loading} />
         </TouchableOpacity>
       ) : (
@@ -136,7 +132,7 @@ const AddNotes = () => {
               handleAddNote();
             }
           }}>
-          <Text style={styles.btnText}>Add Habit</Text>
+          <Text style={styles.btnText}>Add Note</Text>
           <Loader visible={loading} />
         </TouchableOpacity>
       )}
@@ -160,7 +156,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     paddingLeft: 20,
-    color: 'black',
   },
   btn: {
     width: '90%',

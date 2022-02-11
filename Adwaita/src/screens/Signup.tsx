@@ -54,39 +54,39 @@ const Signup = ({navigation}: navProps) => {
   };
 
   const handleSignup = async () => {
-    setLoading(true);
-    try {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      const body = {email: email, password: password, name: name};
-
-      const res = await fetch(
-        'https://notes-app-mern-react-native-server.vercel.app/auth/register',
-        {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify(body),
-        },
-      );
-
-      const data = await res.json();
-
-      setEmail('');
-      setPassword('');
-      setName('');
-
-      if (data) {
-        setLoading(false);
-        navigation.navigate('Home', {id: data._id});
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log('something went wrong');
-      console.log(error);
-      setEmail('');
-      setPassword('');
-      setName('');
-    }
+    // setLoading(true);
+    // try {
+    //   const headers = new Headers();
+    //   headers.append('Content-Type', 'application/json');
+    //   const body = {email: email, password: password, name: name};
+    //
+    //   const res = await fetch(
+    //     'https://notes-app-mern-react-native-server.vercel.app/auth/register',
+    //     {
+    //       headers: headers,
+    //       method: 'POST',
+    //       body: JSON.stringify(body),
+    //     },
+    //   );
+    //
+    //   const data = await res.json();
+    //
+    //   setEmail('');
+    //   setPassword('');
+    //   setName('');
+    //
+    //   if (data) {
+    //     setLoading(false);
+    navigation.navigate('Home');
+    //   }
+    // } catch (error) {
+    //   setLoading(false);
+    //   console.log('something went wrong');
+    //   console.log(error);
+    //   setEmail('');
+    //   setPassword('');
+    //   setName('');
+    // }
   };
   return (
     <SafeAreaView style={styles.container}>

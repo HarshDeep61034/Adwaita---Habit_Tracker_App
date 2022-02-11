@@ -22,7 +22,7 @@ import {useIsFocused, useRoute} from '@react-navigation/native';
 interface navProps {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 }
-type id = string | undefined;
+// type id = string | undefined;
 
 type notes = {
   title: string;
@@ -40,7 +40,7 @@ const Home = ({navigation}: navProps) => {
   const isFocused = useIsFocused();
 
   const getNotes = async () => {
-    const {id}: id = route.params;
+    // const {id}: id = route.params;
     const header = new Headers();
     header.append('Content-Type', 'application/json');
 
@@ -55,7 +55,7 @@ const Home = ({navigation}: navProps) => {
     setNotes(data);
   };
   const handleCreateNote = () => {
-    navigation.navigate('AddNotes', {id: route.params.id, type: 'New'});
+    navigation.navigate('AddNotes');
   };
 
   const deleteNotes = async (id: string) => {
@@ -81,9 +81,9 @@ const Home = ({navigation}: navProps) => {
     }
   };
 
-  useEffect(() => {
-    getNotes();
-  }, [isFocused]);
+  // useEffect(() => {
+  //   getNotes();
+  // }, [isFocused]);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
