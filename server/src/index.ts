@@ -62,3 +62,6 @@ async function startServer() {
 }
 
 startServer();
+const app = express();
+app.get("/", (_req: any, res: any) => res.send("hi"));
+app.listen(8080, () => console.log("Listening at PORT 8080"));
