@@ -28,6 +28,7 @@ export default function Auth() {
       password: password,
     });
 
+
     console.log(lol);
 
     setLoading(false);
