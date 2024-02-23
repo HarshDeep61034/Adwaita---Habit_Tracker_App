@@ -1,14 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+
+import { useNavigation } from "@react-navigation/native";
 export default function Habit({ name, time }) {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("HabitDone", {
+          habit: name,
+        })
+      }
+      style={styles.container}
+    >
       <Text style={styles.time}>{time}</Text>
       <View style={styles.habitlogo}>
         <AntDesign name="star" size={30} color="#a78bfa" />
         <Text style={styles.habit}>{name}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
