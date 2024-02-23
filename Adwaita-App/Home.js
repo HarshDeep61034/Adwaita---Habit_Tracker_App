@@ -1,9 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, ScrollView, Text, View } from "react-native";
+import { StyleSheet, ScrollView, Text, View, Button } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Navbar from "./components/Navbar";
 import Habit from "./components/Habit";
+import { useNavigation } from "@react-navigation/native";
 export default function Home() {
+  const navigation = useNavigation();
   const User = "Harsh";
   const data = [
     {
@@ -55,6 +57,14 @@ export default function Home() {
           <Text style={styles.heading}>
             Hello There,<Text style={{ color: "#312e81" }}> {User}</Text>
           </Text>
+
+          <Button
+            onPress={() => navigation.navigate("HabitCreate")}
+            title="+"
+            color="#1e1b4b"
+          >
+            +
+          </Button>
           <Text style={styles.streak}>
             <Text style={{ fontWeight: "500" }}> Streak : 7 </Text>
             <FontAwesome5 name="fire-alt" size={24} />
@@ -65,7 +75,7 @@ export default function Home() {
         </View>
       </ScrollView>
 
-      <Navbar />
+      <Navbar disable={"Home"} />
       <StatusBar style="auto" />
     </View>
   );
