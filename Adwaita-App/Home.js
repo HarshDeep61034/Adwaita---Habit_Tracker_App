@@ -3,8 +3,32 @@ import { StyleSheet, ScrollView, Text, View, Button } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Navbar from "./components/Navbar";
 import Habit from "./components/Habit";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 export default function Home() {
+  const [user, setUser] = useState(null);
+  async function checkAuth() {
+    const JWT = await AsyncStorage.getItem("jwtToken");
+    setJwt(JWT);
+    if (!JWT) {
+      navigation.navigate("SignUp");
+    } else {
+      const res = await axios.get("");
+    }
+  }
+  checkAuth();
+  useEffect(() => {}, []);
+
+  async function handleLogout() {
+    await AsyncStorage.removeItem("jwtToken");
+
+    const res = await AsyncStorage.getItem("jwtToken");
+    console.log(res);
+    console.log("logout hoja");
+  }
+
   const navigation = useNavigation();
   const User = "Harsh";
   const data = [
@@ -49,11 +73,15 @@ export default function Home() {
       time: "9:30 PM",
     },
   ];
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View>
+          <Button
+            onPress={() => handleLogout()}
+            title="Logout"
+            color="#1e1b4b"
+          />
           <Text style={styles.heading}>
             Hello There,<Text style={{ color: "#312e81" }}> {User}</Text>
           </Text>
@@ -70,7 +98,7 @@ export default function Home() {
             <FontAwesome5 name="fire-alt" size={24} />
           </Text>
           {data.map((item, index) => (
-            <Habit key={index} name={item.name} time={item.time} />
+            <Habit key={index} name={item.name} route="Home" time={item.time} />
           ))}
         </View>
       </ScrollView>
