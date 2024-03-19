@@ -50,7 +50,7 @@ export default function StatisticsScreen({ navigation, route }) {
       <View style={{ height: 660 }}>
         <ScrollView>
           {data.map((item, index) => (
-            <Habit key={index} name={item.name} time={item.time} />
+            <Habit key={index} route="Stats" name={item.name} time={item.time} />
           ))}
         </ScrollView>
       </View>

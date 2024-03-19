@@ -9,7 +9,7 @@ export default function HabitCreate() {
     { key: "2", value: "Education" },
     { key: "3", value: "Health and Fitness" },
     { key: "4", value: "Reading" },
-    { key: "5", value: "Productivity" },
+    { key: "5", value: "Productivity" },~
     { key: "6", value: "Mental Well-being" },
     { key: "7", value: "Hobbies" },
   ];
