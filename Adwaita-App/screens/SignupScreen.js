@@ -12,14 +12,12 @@ export const SignupScreen = () => {
     setLoading(true);
     try{
     const res = await axios.post("https://backend.hdeep61034.workers.dev/api/v1/signup", formData);
-    console.log(res.data);
     await AsyncStorage.setItem('jwtToken', res.data.token);
     navigation.navigate("Home");
     alert("Signed up successfully");  
-
     }
     catch(err){
-        console.log("error agya bro");
+        console.log("error: " + err );
     }
     finally{
         setLoading(false);
@@ -39,14 +37,6 @@ export const SignupScreen = () => {
           placeholderTextColor={"#94a3b8"}
           placeholder="Email"
         ></TextInput>
-        <TextInput
-          name="username"
-          onChangeText={(text) => handleChange("username", text)}
-          style={styles.input}
-          placeholderTextColor={"#94a3b8"}
-          placeholder="Username"
-        ></TextInput>
-
         <TextInput
           name="firstName"
           onChangeText={(text) => handleChange("firstName", text)}

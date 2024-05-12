@@ -1,14 +1,38 @@
 import { View, Image, Button, Text, StyleSheet } from "react-native";
-import { Entypo } from "@expo/vector-icons";
 import dumble from "../assets/dumble.png";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HabitDone({ navigation, route }) {
+ 
+
+  const updateHabit = async (habitId) => {
+    try {
+      const jwt = await AsyncStorage.getItem("jwtToken");
+      const response = await axios.post(
+        "https://backend.hdeep61034.workers.dev/api/v1/habit/track", {habitId},
+        {
+          headers: {
+            Authorization: "Bearer " + jwt,
+          },
+        }
+      );
+      console.log(response);// handle the response from the backend
+    } catch (error) {
+      console.error(error); // handle any errors that occur during the request
+    }
+    finally {
+      alert("Habit Done!");
+      navigation.navigate("Home");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.habit}>{route.params.habit}</Text>
-      <Image style={{ width: 200, height: 200 }} source={dumble} />
+      <Image style={{ width: 250, height: 320 }} source={dumble} />
       <Button
-        onPress={() => alert("Habit Done!!")}
+        onPress={() => updateHabit(route.params.id)}
         title="Done"
         color="#a78bfa"
       />

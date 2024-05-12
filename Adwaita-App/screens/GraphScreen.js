@@ -11,20 +11,19 @@ import dumble from "../assets/dumble.png";
 import { FontAwesome5 } from "@expo/vector-icons";
 export default function GraphScreen({ navigation, route }) {
   const data = {
-    labels: ["Swim", "Bike", "Run"], // optional
+    labels: ["Current", "Previous", "Penultimate"], // optional
     data: [0.4, 0.6, 0.8],
   };
 
   const linedata = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["January", "February", "March", "April", "May"],
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
-    ],
-    legend: ["Rainy Days"], // optional
+    ], // optional
   };
   chartConfig = {
     backgroundColor: "#f8fafc",
@@ -79,13 +78,14 @@ export default function GraphScreen({ navigation, route }) {
         <View style={styles.habitImg}>
           <Image
             source={dumble}
-            style={{ width: 100, height: 100, margin: "auto" }}
+            style={{ width: 95, height: 115, margin: "auto" }}
           />
         </View>
       </View>
       <ProgressChart
+      style={{position: "relative", right: 50}}
         data={data}
-        width={250}
+        width={370}
         height={170}
         strokeWidth={13}
         radius={25}
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   habitImg: {
     width: 100,
-    height: 100,
+    height: 120,
     margin: 4,
     borderRadius: 20,
     overflow: "hidden",

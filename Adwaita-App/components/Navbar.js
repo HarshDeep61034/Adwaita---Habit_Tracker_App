@@ -3,9 +3,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-export default function Navbar({ disable }) {
+export default function Navbar({ disable, user }) {
   const navigation = useNavigation();
-  console.log(disable);
   return (
     <View style={styles.container}>
       <View>
@@ -22,7 +21,7 @@ export default function Navbar({ disable }) {
           name="bar-graph"
           style={styles.icon}
           size={24}
-          onPress={() => navigation.navigate("Statistics")}
+          onPress={() => navigation.navigate("Statistics", {user})}
           color={disable == "Statistics" ? "#6366f1" : "#1e1b4b"}
         />
       </View>

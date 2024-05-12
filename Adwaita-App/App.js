@@ -10,10 +10,14 @@ import HabitCreate from "./screens/HabitCreate";
 import GraphScreen from "./screens/GraphScreen";
 import { SignupScreen } from "./screens/SignupScreen";
 import { SigninScreen } from "./screens/SigninScreen";
+import {RecoilRoot} from 'recoil';
+import ProfileCreate from "./screens/ProfileCreate";
+import RealStatsScreen from "./screens/RealStatsScreen";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
+    <RecoilRoot>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
@@ -61,8 +65,19 @@ const App = () => {
           component={HabitCreate}
           options={{ title: "Create New Habit" }}
         />
+        <Stack.Screen
+          name="ProfileEdit"
+          component={ProfileCreate}
+          options={{ title: "Edit Your Profile" }}
+        />
+        <Stack.Screen
+          name="RealStats"
+          component={RealStatsScreen}
+          options={{ title: "Statistics" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
+    </RecoilRoot>
   );
 };
 

@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useNavigation } from "@react-navigation/native";
-export default function Habit({ name, time, route }) {
+export default function Habit({ name, time, id, route }) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -10,10 +10,16 @@ export default function Habit({ name, time, route }) {
         if(route == 'Home'){
           navigation.navigate("HabitDone", {
             habit: name,
+            id: id,
           })
         }
         else if(route == 'Stats'){
           navigation.navigate("Stats", {
+            habit: name,
+          })
+        }
+        else if(route == 'RealStats'){
+          navigation.navigate("RealStats", {
             habit: name,
           })
         }

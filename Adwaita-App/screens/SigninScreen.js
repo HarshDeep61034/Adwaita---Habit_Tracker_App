@@ -40,14 +40,6 @@ export const SigninScreen = () => {
           placeholder="Email"
         ></TextInput>
         <TextInput
-          name="username"
-          onChangeText={(text) => handleChange("username", text)}
-          style={styles.input}
-          placeholderTextColor={"#94a3b8"}
-          placeholder="Username"
-        ></TextInput>
-
-        <TextInput
           name="password"
           o
           onChangeText={(text) => handleChange("password", text)}

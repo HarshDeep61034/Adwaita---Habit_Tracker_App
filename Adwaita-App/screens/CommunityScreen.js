@@ -1,181 +1,90 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 import Post from "../components/Post";
+import { FontAwesome } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function CommunityScreen({ navigation, route }) {
-  const data = [
-    {
-      id: 1,
-      text: "This is the first post!",
-      user: {
-        id: 101,
-        username: "user1",
-      },
-    },
-    {
-      id: 2,
-      text: "Just another day in the digital world.",
-      user: {
-        id: 102,
-        username: "user2",
-      },
-    },
-    {
-      id: 3,
-      text: "Feeling inspired today!",
-      user: {
-        id: 103,
-        username: "user3",
-      },
-    },
-    {
-      id: 4,
-      text: "Coding is my passion.",
-      user: {
-        id: 104,
-        username: "user4",
-      },
-    },
-    {
-      id: 5,
-      text: "Exploring the great outdoors.",
-      user: {
-        id: 105,
-        username: "user5",
-      },
-    },
-    {
-      id: 6,
-      text: "Foodie adventures in the city!",
-      user: {
-        id: 106,
-        username: "user6",
-      },
-    },
-    {
-      id: 7,
-      text: "Traveling the world one step at a time.",
-      user: {
-        id: 107,
-        username: "user7",
-      },
-    },
-    {
-      id: 8,
-      text: "Morning coffee vibes.",
-      user: {
-        id: 108,
-        username: "user8",
-      },
-    },
-    {
-      id: 9,
-      text: "Learning something new every day.",
-      user: {
-        id: 109,
-        username: "user9",
-      },
-    },
-    {
-      id: 10,
-      text: "Sunset views from the balcony.",
-      user: {
-        id: 110,
-        username: "user10",
-      },
-    },
-    {
-      id: 11,
-      text: "Late-night coding session!",
-      user: {
-        id: 111,
-        username: "user11",
-      },
-    },
-    {
-      id: 12,
-      text: "Weekend relaxation mode activated.",
-      user: {
-        id: 112,
-        username: "user12",
-      },
-    },
-    {
-      id: 13,
-      text: "Random thoughts on a Tuesday.",
-      user: {
-        id: 113,
-        username: "user13",
-      },
-    },
-    {
-      id: 14,
-      text: "Fitness journey in progress.",
-      user: {
-        id: 114,
-        username: "user14",
-      },
-    },
-    {
-      id: 15,
-      text: "Reading my favorite book again.",
-      user: {
-        id: 115,
-        username: "user15",
-      },
-    },
-    {
-      id: 16,
-      text: "Creating art with passion.",
-      user: {
-        id: 116,
-        username: "user16",
-      },
-    },
-    {
-      id: 17,
-      text: "Saturday brunch with friends!",
-      user: {
-        id: 117,
-        username: "user17",
-      },
-    },
-    {
-      id: 18,
-      text: "Tech talk at the conference.",
-      user: {
-        id: 118,
-        username: "user18",
-      },
-    },
-    {
-      id: 19,
-      text: "Hiking in the mountains.",
-      user: {
-        id: 119,
-        username: "user19",
-      },
-    },
-    {
-      id: 20,
-      text: "Reflecting on the year gone by.",
-      user: {
-        id: 120,
-        username: "user20",
-      },
-    },
-  ];
+  const [post, setPost] = useState("");
+  const [data, setData] = useState([]);
+  const [change, setChange] = useState(false);
+  
+  console.log(post);
+  function refresh() {
+    setChange(!change);
+  }
+
+  useEffect(() => {
+    async function fetchposts(){
+      const response = await axios.get("https://backend.hdeep61034.workers.dev/api/v1/posts");
+      setData(response.data.posts);
+      console.log(response.data.posts);
+    }
+
+    fetchposts();
+  }, [change]);
+ 
+  async function fetchData() {
+
+    try {
+      const jwt = await AsyncStorage.getItem("jwtToken");
+      if (jwt == null) {
+        navigation.navigate("SignUp");
+      }
+      // https://backend.hdeep61034.workers.dev
+      const response = await axios.post(
+        "https://backend.hdeep61034.workers.dev/api/v1/newpost", {content: post},
+        {
+          headers: {
+            Authorization: "Bearer " + jwt,
+          },
+        }
+      );
+      setPost("");
+      console.log(response);
+    } catch (error) {
+      console.error("Error occurred:", error);
+    } finally {
+      // setLoading(false);
+      refresh();
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={{ height: 660 }}>
+        <View style={styles.container2}>
+          <TextInput
+            value={post}
+            style={styles.inputBox}
+            placeholderTextColor="#94a3b8"
+            placeholder="What's on your mind?"
+            onChangeText={(text) => setPost(text)}
+          />
+          <FontAwesome name="send" onPress={()=>fetchData()} size={24} color="#a78bfa" />
+        </View>
+
         <ScrollView>
-          {data.map((item) => (
-            <Post id={item.id} name={item.user["username"]} post={item.text} />
-          ))}
+          {data.length > 0 ? (data.map((item, index) => (
+            <Post
+              id={item.id}
+              key={index}
+              name={item.username}
+              post={item.content}
+            />
+         
+          ))) : <Text>No posts available.</Text>}
         </ScrollView>
       </View>
-
       <Navbar disable={route.name} />
     </View>
   );
@@ -187,5 +96,19 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     backgroundColor: "#f4f4f5",
+  },
+  container2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+  inputBox: {
+    flex: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    color: '#000',
   },
 });
